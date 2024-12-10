@@ -1,0 +1,32 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: demo_application
+      auto-index-creation: true
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    password: password
+    username: sa
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+  h2:
+    console.enabled: true
+    console:
+      path: /h2-console
+  threads:
+    virtual:
+      enabled: true
+  application:
+    name: "demo application"
+logging:
+  level:
+    org:
+      springframework: debug
+server:
+  port: 3030
+
