@@ -39,8 +39,7 @@ dependencies {
 }
 
 test {
-	// previous JVM options
-	jvmArgs("-noverify", "-XX:+EnableDynamicAgentLoading") // add this
+	jvmArgs("-noverify", "-XX:+EnableDynamicAgentLoading")
 }
 
 tasks.named('test') {
