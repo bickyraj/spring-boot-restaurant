@@ -1,18 +1,12 @@
 package features;
 
-import com.bickyraj.demo.DemoApplication;
 import com.bickyraj.demo.config.TestConfig;
 import com.bickyraj.demo.entity.Account;
-import com.bickyraj.demo.entity.Restaurant;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.web.client.RestTemplate;
 
 @SpringBootTest(classes = TestConfig.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BankAccountSteps {
