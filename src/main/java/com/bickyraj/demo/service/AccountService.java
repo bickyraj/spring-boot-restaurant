@@ -1,10 +1,9 @@
 package com.bickyraj.demo.service;
 
-import com.bickyraj.demo.dto.AccountDTO;
 import com.bickyraj.demo.entity.Account;
+import com.bickyraj.demo.exception.EmailOrUsernameAlreadyExistException;
 import com.bickyraj.demo.exception.InsufficientBalanceException;
 import com.bickyraj.demo.exception.NotFoundException;
-import com.bickyraj.demo.model.AccountModel;
 import com.bickyraj.demo.repository.AccountRepository;
 import jakarta.persistence.LockModeType;
 import jakarta.transaction.Transactional;
@@ -17,16 +16,11 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
 
-    public boolean createAccount(AccountDTO accountDTO) {
-        Account account = Account.builder()
-                .name(accountDTO.getName())
-        .username(accountDTO.getUsername())
-                .balance(accountDTO.getBalance())
-                .address(accountDTO.getAddress())
-        .phone("987654321")
-                .build();
+    public boolean createAccount(Account account) {
+        if (accountRepository.existsByEmailAndUsername(account.getEmail(), account.getUsername())) {
+            throw new EmailOrUsernameAlreadyExistException();
+        }
         accountRepository.save(account);
-        System.out.println(account);
         return true;
     }
 

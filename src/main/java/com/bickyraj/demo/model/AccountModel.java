@@ -2,6 +2,7 @@ package com.bickyraj.demo.model;
 
 import com.bickyraj.demo.entity.Account;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 
 
@@ -12,12 +13,24 @@ public class AccountModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false, unique = true)
     private String username;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false, unique = true)
+    @Email
     private String email;
+
+    @Column(nullable = false)
     private String phone;
+
+    @Column(nullable = false)
     private String address;
+
+    @Column(nullable = false)
     private Double balance;
 
     public Account toEntity() {

@@ -6,18 +6,18 @@ spring:
       database: demo_application
       auto-index-creation: true
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
-    password: password
-    username: sa
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/demo
+    password: admin
+    username: admin
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-  h2:
-    console.enabled: true
-    console:
-      path: /h2-console
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
   threads:
     virtual:
       enabled: true

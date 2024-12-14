@@ -27,6 +27,7 @@ dependencies {
 	implementation 'com.h2database:h2:2.3.232'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.postgresql:postgresql:42.7.4'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation "org.mockito:mockito-core:5.5.0"

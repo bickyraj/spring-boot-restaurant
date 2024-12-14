@@ -1,4 +1,4 @@
-package com.bickyraj.demo.dto;
+package com.bickyraj.demo.dto.account;
 
 import lombok.*;
 
@@ -12,4 +12,5 @@ public class AccountDTO {
     private String username;
     private String address;
     private Double balance;
+    private String email;
 }

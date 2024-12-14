@@ -1,4 +1,4 @@
-package com.bickyraj.demo.dto;
+package com.bickyraj.demo.dto.account;
 
 
 import lombok.AllArgsConstructor;

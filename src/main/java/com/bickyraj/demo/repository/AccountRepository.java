@@ -12,4 +12,5 @@ public interface AccountRepository {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     boolean save(Account account);
     Boolean updateBalance(Account account, Double amount);
+    boolean existsByEmailAndUsername(String email, String username);
 }

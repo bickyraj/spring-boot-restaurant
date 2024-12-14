@@ -1,4 +1,4 @@
-package com.bickyraj.demo.repository.h2;
+package com.bickyraj.demo.repository.postgres;
 
 import com.bickyraj.demo.entity.Account;
 import com.bickyraj.demo.model.AccountModel;
@@ -11,19 +11,22 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public class H2AccountRepository implements AccountRepository {
+public class PostgreSqlAccountRepository implements AccountRepository {
 
     private final JpaAccountRepository jpaAccountRepository;
     private final EntityManager entityManager;
 
     @Autowired
-    public H2AccountRepository(JpaAccountRepository jpaAccountRepository, EntityManager entityManager) {
+    public PostgreSqlAccountRepository(JpaAccountRepository jpaAccountRepository, EntityManager entityManager) {
         this.jpaAccountRepository = jpaAccountRepository;
         this.entityManager = entityManager;
     }
@@ -50,7 +53,11 @@ public class H2AccountRepository implements AccountRepository {
 
     @Override
     public boolean save(Account account) {
-        jpaAccountRepository.save(AccountModel.fromEntity(account));
+        try {
+            jpaAccountRepository.save(AccountModel.fromEntity(account));
+        } catch (DataIntegrityViolationException e) {
+            throw new ValidationException("Email or username already exists");
+        }
         return true;
     }
 
@@ -59,5 +66,10 @@ public class H2AccountRepository implements AccountRepository {
         account.setBalance(account.getBalance() - amount);
         jpaAccountRepository.save(AccountModel.fromEntity(account));
         return true;
+    }
+
+    @Override
+    public boolean existsByEmailAndUsername(String email, String username) {
+        return jpaAccountRepository.existsByEmail(email, username);
     }
 }

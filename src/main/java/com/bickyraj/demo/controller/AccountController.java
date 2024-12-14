@@ -1,30 +1,32 @@
 package com.bickyraj.demo.controller;
 
+import com.bickyraj.demo.application.account.CreateAccountUseCase;
 import com.bickyraj.demo.application.account.GetAccountUseCase;
 import com.bickyraj.demo.application.account.WithdrawAmountUseCase;
-import com.bickyraj.demo.dto.AccountDTO;
-import com.bickyraj.demo.dto.AccountResponseBody;
+import com.bickyraj.demo.dto.account.AccountResponseBody;
+import com.bickyraj.demo.dto.account.CreateAccountRequestBody;
 import com.bickyraj.demo.service.AccountService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.Executors;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/account/")
 @Slf4j
 @RequiredArgsConstructor
-public class DemoController {
+@Validated
+public class AccountController {
 
     private final AccountService accountService;
     private final GetAccountUseCase getAccountUseCase;
     private final WithdrawAmountUseCase withdrawAmountUseCase;
+    private final CreateAccountUseCase createAccountUseCase;
 
     @GetMapping("")
     public String index() {
@@ -49,16 +51,21 @@ public class DemoController {
         Thread.sleep(5000);
     }
 
-    @GetMapping("/create-account")
-    public String createAccount() {
-        AccountDTO accountDTO = AccountDTO.builder()
-                .username("bicky")
-                .name("bicky")
-                .balance(5000d)
-                .address("nepal")
-                .build();
-        accountService.createAccount(accountDTO);
-        return "account created";
+    @PostMapping("/create-account")
+    public String createAccount(@Valid @RequestBody CreateAccountRequestBody requestBody) {
+        CreateAccountUseCase.Response response = createAccountUseCase.execute(
+                CreateAccountUseCase.Request.of(
+                        requestBody.getName(),
+                        requestBody.getUsername(),
+                        requestBody.getAddress(),
+                        requestBody.getBalance(),
+                        requestBody.getEmail()
+                )
+        );
+        if (response.isSuccess()) {
+            return "account created";
+        }
+        return "error creating account";
     }
 
     @GetMapping("/withdraw")
