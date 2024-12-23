@@ -1,11 +1,8 @@
 package com.bickyraj.demo.application.account;
 
 import com.bickyraj.demo.application.UseCase;
-import com.bickyraj.demo.dto.account.AccountDTO;
 import com.bickyraj.demo.entity.Account;
-import com.bickyraj.demo.repository.AccountRepository;
 import com.bickyraj.demo.service.AccountService;
-import jakarta.persistence.LockModeType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CreateAccountUseCase implements UseCase<CreateAccountUseCase.Request, CreateAccountUseCase.Response> {
+public class CreateAccountUseCase extends UseCase<CreateAccountUseCase.Request, CreateAccountUseCase.Response> {
 
     @AllArgsConstructor(staticName = "of")
     public static class Request {

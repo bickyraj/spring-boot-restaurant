@@ -17,6 +17,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -71,5 +72,10 @@ public class PostgreSqlAccountRepository implements AccountRepository {
     @Override
     public boolean existsByEmailAndUsername(String email, String username) {
         return jpaAccountRepository.existsByEmail(email, username);
+    }
+
+    @Override
+    public List<Account> all() {
+        return jpaAccountRepository.findAll().stream().map(AccountModel::toEntity).toList();
     }
 }

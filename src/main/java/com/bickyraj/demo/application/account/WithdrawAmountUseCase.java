@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class WithdrawAmountUseCase implements UseCase<WithdrawAmountUseCase.Request, WithdrawAmountUseCase.Response> {
+public class WithdrawAmountUseCase extends UseCase<WithdrawAmountUseCase.Request, WithdrawAmountUseCase.Response> {
 
     @AllArgsConstructor(staticName = "of")
     public static class Request {

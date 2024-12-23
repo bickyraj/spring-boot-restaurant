@@ -4,6 +4,7 @@ import com.bickyraj.demo.entity.Account;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.Lock;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AccountRepository {
@@ -13,4 +14,5 @@ public interface AccountRepository {
     boolean save(Account account);
     Boolean updateBalance(Account account, Double amount);
     boolean existsByEmailAndUsername(String email, String username);
+    List<Account> all();
 }

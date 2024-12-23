@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CreateRestaurantUseCase implements UseCase<CreateRestaurantUseCase.Request, CreateRestaurantUseCase.Response> {
+public class CreateRestaurantUseCase extends UseCase<CreateRestaurantUseCase.Request, CreateRestaurantUseCase.Response> {
     @AllArgsConstructor(staticName = "of")
     public static class Request {
         private final String name;

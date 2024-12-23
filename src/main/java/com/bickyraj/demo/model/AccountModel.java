@@ -36,6 +36,7 @@ public class AccountModel {
     public Account toEntity() {
         return Account.builder()
                 .username(this.username)
+                .name(this.name)
                 .id(this.id)
                 .email(this.email)
                 .phone(this.phone)

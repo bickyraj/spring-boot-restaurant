@@ -2,6 +2,7 @@ package com.bickyraj.demo.controller;
 
 import com.bickyraj.demo.application.account.CreateAccountUseCase;
 import com.bickyraj.demo.application.account.GetAccountUseCase;
+import com.bickyraj.demo.application.account.GetAllAccountUseCase;
 import com.bickyraj.demo.application.account.WithdrawAmountUseCase;
 import com.bickyraj.demo.dto.account.AccountResponseBody;
 import com.bickyraj.demo.dto.account.CreateAccountRequestBody;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 
 @RestController
@@ -27,6 +29,7 @@ public class AccountController {
     private final GetAccountUseCase getAccountUseCase;
     private final WithdrawAmountUseCase withdrawAmountUseCase;
     private final CreateAccountUseCase createAccountUseCase;
+    private final GetAllAccountUseCase getAllAccountUseCase;
 
     @GetMapping("")
     public String index() {
@@ -83,5 +86,12 @@ public class AccountController {
     public ResponseEntity<AccountResponseBody> getAccount(@PathVariable String username) {
         GetAccountUseCase.Response response = getAccountUseCase.execute(GetAccountUseCase.Request.of(username));
         return new ResponseEntity<>(AccountResponseBody.of(response.getName(), response.getBalance()), HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<AccountResponseBody>> getAllAccounts() {
+        GetAllAccountUseCase.Response response = getAllAccountUseCase.execute();
+        return new ResponseEntity<>(response.getAccounts()
+                .stream().map(a -> AccountResponseBody.of(a.getName(), a.getBalance())).toList(), HttpStatus.OK);
     }
 }

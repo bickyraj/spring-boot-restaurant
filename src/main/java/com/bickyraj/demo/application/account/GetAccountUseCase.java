@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class GetAccountUseCase implements UseCase<GetAccountUseCase.Request, GetAccountUseCase.Response> {
+public class GetAccountUseCase extends UseCase<GetAccountUseCase.Request, GetAccountUseCase.Response> {
 
     @AllArgsConstructor(staticName = "of")
     public static class Request {
