@@ -13,6 +13,12 @@ public class DemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
+//		StringBuilder sb = new StringBuilder();
+//		sb.append("hello world");
+//		sb.append(" test");
+//		System.out.println(sb.capacity());
+//		System.out.println(sb);
+
 //		Employee employee = new Employee("bicky", 500d);
 //		Employee employee1 = new Employee("ram", 400d);
 //		Employee employee2 = new Employee("test", 100d);

@@ -1,0 +1,5 @@
+docker run -d \
+ -p 9090:9090 \
+ -v /Users/bickyrajkayastha/projects/demo/prometheus.yml:/etc/prometheus/prometheus.yml \
+ --name prometheus-local \
+ prom/prometheus

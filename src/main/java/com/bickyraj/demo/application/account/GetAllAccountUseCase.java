@@ -4,6 +4,7 @@ import com.bickyraj.demo.application.UseCase;
 import com.bickyraj.demo.application.EmptyRequest;
 import com.bickyraj.demo.entity.Account;
 import com.bickyraj.demo.repository.AccountRepository;
+import io.micrometer.observation.annotation.Observed;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class GetAllAccountUseCase extends UseCase<EmptyRequest, GetAllAccountUse
 
     private final AccountRepository accountRepository;
 
+    @Observed(name="account.service.response.time.seconds")
     @Override
     public Response execute() {
         return Response.of(accountRepository.all());

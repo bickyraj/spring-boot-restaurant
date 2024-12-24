@@ -7,6 +7,8 @@ import com.bickyraj.demo.application.account.WithdrawAmountUseCase;
 import com.bickyraj.demo.dto.account.AccountResponseBody;
 import com.bickyraj.demo.dto.account.CreateAccountRequestBody;
 import com.bickyraj.demo.service.AccountService;
+import io.micrometer.core.annotation.Timed;
+import io.micrometer.observation.annotation.Observed;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +21,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 
 @RestController
-@RequestMapping("/account/")
+@RequestMapping("/api/account/")
 @Slf4j
 @RequiredArgsConstructor
 @Validated
@@ -88,6 +90,7 @@ public class AccountController {
         return new ResponseEntity<>(AccountResponseBody.of(response.getName(), response.getBalance()), HttpStatus.OK);
     }
 
+    @Observed(name = "api.account_all.response.time.seconds")
     @GetMapping("/all")
     public ResponseEntity<List<AccountResponseBody>> getAllAccounts() {
         GetAllAccountUseCase.Response response = getAllAccountUseCase.execute();

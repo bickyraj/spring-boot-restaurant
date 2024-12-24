@@ -4,6 +4,7 @@ import com.bickyraj.demo.entity.Account;
 import com.bickyraj.demo.model.AccountModel;
 import com.bickyraj.demo.repository.AccountRepository;
 import com.bickyraj.demo.repository.jpa.JpaAccountRepository;
+import io.micrometer.observation.annotation.Observed;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.NoResultException;
@@ -75,6 +76,7 @@ public class PostgreSqlAccountRepository implements AccountRepository {
     }
 
     @Override
+    @Observed(name = "account.repository.time")
     public List<Account> all() {
         return jpaAccountRepository.findAll().stream().map(AccountModel::toEntity).toList();
     }

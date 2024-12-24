@@ -29,4 +29,18 @@ logging:
       springframework: debug
 server:
   port: 3030
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus, info
+  endpoint:
+    metrics:
+      access: read_only
+  metrics:
+    enable:
+      all: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
