@@ -8,6 +8,7 @@ import io.micrometer.observation.annotation.Observed;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class GetAllAccountUseCase extends UseCase<EmptyRequest, GetAllAccountUse
 
     @Observed(name="account.service.response.time.seconds")
     @Override
+    @Cacheable(value = "accounts")
     public Response execute() {
         return Response.of(accountRepository.all());
     }

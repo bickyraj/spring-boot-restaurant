@@ -95,6 +95,7 @@ public class AccountController {
     public ResponseEntity<List<AccountResponseBody>> getAllAccounts() {
         GetAllAccountUseCase.Response response = getAllAccountUseCase.execute();
         return new ResponseEntity<>(response.getAccounts()
-                .stream().map(a -> AccountResponseBody.of(a.getName(), a.getBalance())).toList(), HttpStatus.OK);
+                .stream()
+                .map(a -> AccountResponseBody.of(a.getName(), a.getBalance())).toList(), HttpStatus.OK);
     }
 }

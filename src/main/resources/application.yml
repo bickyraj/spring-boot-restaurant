@@ -1,10 +1,20 @@
 spring:
+  cache:
+    type: redis
   data:
     mongodb:
       host: localhost
       port: 27017
       database: demo_application
       auto-index-creation: true
+    redis:
+      host: localhost
+      port: 6379
+      lettuce:
+        pool:
+          max-active: 10
+          max-idle: 5
+          min-idle: 2
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/demo
