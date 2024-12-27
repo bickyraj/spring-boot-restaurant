@@ -4,10 +4,11 @@ import com.bickyraj.demo.application.account.CreateAccountUseCase;
 import com.bickyraj.demo.application.account.GetAccountUseCase;
 import com.bickyraj.demo.application.account.GetAllAccountUseCase;
 import com.bickyraj.demo.application.account.WithdrawAmountUseCase;
+import com.bickyraj.demo.application.book.GetBookUseCase;
 import com.bickyraj.demo.dto.account.AccountResponseBody;
 import com.bickyraj.demo.dto.account.CreateAccountRequestBody;
+import com.bickyraj.demo.infrastructure.client.book.BookDto;
 import com.bickyraj.demo.service.AccountService;
-import io.micrometer.core.annotation.Timed;
 import io.micrometer.observation.annotation.Observed;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class AccountController {
     private final WithdrawAmountUseCase withdrawAmountUseCase;
     private final CreateAccountUseCase createAccountUseCase;
     private final GetAllAccountUseCase getAllAccountUseCase;
+    private final GetBookUseCase getBookUseCase;
 
     @GetMapping("")
     public String index() {
@@ -97,5 +99,11 @@ public class AccountController {
         return new ResponseEntity<>(response.getAccounts()
                 .stream()
                 .map(a -> AccountResponseBody.of(a.getName(), a.getBalance())).toList(), HttpStatus.OK);
+    }
+
+    @GetMapping("/get-book/{id}")
+    public ResponseEntity<BookDto> getBook(@PathVariable Long id) {
+        GetBookUseCase.Response response = getBookUseCase.execute(GetBookUseCase.Request.of(id));
+        return new ResponseEntity<>(response.getBook(), HttpStatus.OK);
     }
 }

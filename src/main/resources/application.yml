@@ -40,6 +40,10 @@ logging:
 server:
   port: 3030
 management:
+  tracing:
+    sampling:
+      probability: 1
+    enabled: true
   endpoints:
     web:
       exposure:
