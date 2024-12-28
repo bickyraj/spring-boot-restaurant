@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 @Component
+@ConditionalOnProperty(name = "clientPermissionFilter.enabled", havingValue = "true", matchIfMissing = true)
 @RequiredArgsConstructor
 public class ClientPermissionFilter extends OncePerRequestFilter {
     private final ClientPermissionRedisService clientPermissionRedisService;
