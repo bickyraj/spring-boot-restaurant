@@ -9,6 +9,7 @@ import com.bickyraj.demo.dto.account.AccountResponseBody;
 import com.bickyraj.demo.dto.account.CreateAccountRequestBody;
 import com.bickyraj.demo.infrastructure.client.book.BookDto;
 import com.bickyraj.demo.service.AccountService;
+import com.bickyraj.demo.util.CipherUtil;
 import io.micrometer.observation.annotation.Observed;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.SecretKey;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.concurrent.Executors;
 
@@ -105,5 +108,10 @@ public class AccountController {
     public ResponseEntity<BookDto> getBook(@PathVariable Long id) {
         GetBookUseCase.Response response = getBookUseCase.execute(GetBookUseCase.Request.of(id));
         return new ResponseEntity<>(response.getBook(), HttpStatus.OK);
+    }
+
+    @GetMapping("/generate-secret")
+    public SecretKey generateSecret() throws NoSuchAlgorithmException {
+        return CipherUtil.generateSecretKey();
     }
 }

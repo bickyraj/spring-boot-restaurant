@@ -11,16 +11,25 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
 public class ClientPermissionFilter extends OncePerRequestFilter {
     private final ClientPermissionRedisService clientPermissionRedisService;
+    private static final Set<String> EXCLUDED_URLS = Set.of("/api/account/all", "/health", "/actuator/prometheus");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+
+        String requestUri = request.getRequestURI();
+        if (EXCLUDED_URLS.contains(requestUri)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String username = request.getHeader("username");
         if (username == null || username.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
